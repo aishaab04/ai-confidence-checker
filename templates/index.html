@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Confidence Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-mark">
+          <span>?!</span>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">CAPTURED</span>
+          <span class="logo-sub">AI Confidence Checker</span>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="topic-indicator" id="topicIndicator">No question selected</div>
+        
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-shell">
+
+      <!-- LEFT: MAIN CONTENT -->
+      <div class="main-content">
+
+        <!-- Question Selector -->
+        <section class="card selector-card">
+          <div class="card-label">Question bank</div>
+          <div class="selector-row">
+            <div class="select-wrap">
+              <label for="questionSelect">Choose a question</label>
+              <select id="questionSelect"></select>
+            </div>
+            <div class="topic-filter" id="topicFilter"></div>
+          </div>
+          <div class="prompt-display" id="promptText">Select a question to begin</div>
+          <div class="action-row">
+            <button id="quickBtn" class="btn btn-quick">
+        <span class="btn-icon">⚡</span>
+        Quick Answer
+    </button>
+            <button id="generateBtn" class="btn btn-primary">
+              <span class="btn-icon">◎</span>
+              Answer & Explain
+            </button>
+            <button id="checkBtn" class="btn btn-secondary" disabled>
+              <span class="btn-icon">✓</span>
+              Check Answer
+            </button>
+            <button id="nextBtn" class="btn btn-ghost" disabled>
+              Next →
+            </button>
+          </div>
+        </section>
+
+        <!-- AI Answer -->
+        <section class="card answer-card" id="answerCard">
+          <div class="card-label">AI response</div>
+
+          <div class="answer-main" id="aiAnswer">
+            <div class="answer-placeholder">
+              <div class="placeholder-icon">◎</div>
+              <div class="placeholder-text">Click "Generate AI Answer" to see how the AI responds</div>
+            </div>
+          </div>
+
+          <div id="explanationWrap" class="explanation-wrap hidden">
+            <div class="explanation-label">AI reasoning</div>
+            <div id="explanation" class="explanation-text"></div>
+          </div>
+
+          <!-- Steps breakdown -->
+          <div id="stepsWrap" class="steps-wrap hidden">
+            <div class="steps-label">Step-by-step breakdown</div>
+            <div id="stepsList" class="steps-list"></div>
+          </div>
+
+          <!-- Confidence -->
+          <div id="confidenceWrap" class="confidence-wrap hidden">
+            <div class="confidence-header">
+              <span class="confidence-label">AI self-reported confidence</span>
+              <span id="confidenceValue" class="confidence-value">—%</span>
+            </div>
+            <div class="confidence-track">
+              <div id="confidenceBar" class="confidence-fill" style="width:0%"></div>
+            </div>
+            <div id="confidenceWarning" class="confidence-warning hidden">
+              ⚠ High confidence detected — verify carefully
+            </div>
+          </div>
+        </section>
+
+        <!-- Result -->
+        <section class="card result-card hidden" id="resultCard">
+          <div class="card-label">Verification result</div>
+          <div class="result-inner">
+            <div id="verdict" class="verdict">—</div>
+            <div id="resultExplanation" class="result-explanation"></div>
+            <div id="hallucinationAlert" class="hallucination-alert hidden">
+              <div class="alert-icon">!</div>
+              <div class="alert-content">
+                <strong>Hallucination danger zone</strong>
+                <span id="hallucinationMsg"></span>
+              </div>
+            </div>
+            <div id="correctAnswerBlock" class="correct-answer-block hidden">
+              <div class="correct-label">Correct answer</div>
+              <div id="correctAnswerValue" class="correct-value"></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- RIGHT: SIDEBAR -->
+      <aside class="right-panel">
+
+        <!-- Stats -->
+        <section class="side-card stats-card">
+          <div class="card-label">Session stats</div>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-value" id="statTotal">0</div>
+              <div class="stat-label">Questions asked</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value danger" id="statWrong">0</div>
+              <div class="stat-label">AI was wrong</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value warning" id="statHalluc">0</div>
+              <div class="stat-label">High conf + wrong</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="statAvgConf">—</div>
+              <div class="stat-label">Avg confidence</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Walkthrough -->
+        <section class="side-card walkthrough-card">
+          <div class="card-label">How to use</div>
+          <ol class="walkthrough-list">
+            <li>
+              <span class="step-num">01</span>
+              <span>Pick a question from the dropdown — topics include exponents, algebra, geometry, and more.</span>
+            </li>
+            <li>
+              <span class="step-num">02</span>
+              <span>Click <strong>Generate AI Answer</strong> to see how the AI responds and its confidence level.</span>
+            </li>
+            <li>
+              <span class="step-num">03</span>
+              <span>Click <strong>Check Answer</strong> to verify if the AI got it right against the known correct answer.</span>
+            </li>
+            <li>
+              <span class="step-num">04</span>
+              <span>Watch for the <span class="danger-tag">danger zone</span> — when the AI is wrong but highly confident.</span>
+            </li>
+          </ol>
+        </section>
+
+        <!-- Topic breakdown -->
+        <section class="side-card topic-card">
+          <div class="card-label">Error rate by topic</div>
+          <div id="topicChart" class="topic-chart">
+            <div class="chart-empty">Ask some questions to see patterns</div>
+          </div>
+        </section>
+
+        <!-- Log -->
+        <section class="side-card log-card">
+          <div class="card-label">Recent results</div>
+          <div id="sessionLog" class="session-log">
+            <div class="log-empty">No results yet</div>
+          </div>
+        </section>
+
+      </aside>
+    </div>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

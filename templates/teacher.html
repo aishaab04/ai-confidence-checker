@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CAPTURED — Teacher Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:     #0a0a0f;
+      --ink2:    #1a1a2e;
+      --ink3:    #2d2d44;
+      --slate:   #5a5a7a;
+      --muted:   #8888aa;
+      --border:  #e4e4f0;
+      --surface: #f7f7fc;
+      --white:   #ffffff;
+      --amber:   #f59e0b;
+      --amber-l: #fef3c7;
+      --amber-d: #92400e;
+      --red:     #ef4444;
+      --red-l:   #fee2e2;
+      --red-d:   #991b1b;
+      --green:   #10b981;
+      --green-l: #d1fae5;
+      --green-d: #065f46;
+      --purple:  #7c3aed;
+      --purple-l:#ede9fe;
+      --teal:    #0891b2;
+      --teal-l:  #cffafe;
+      --font:    'Syne', sans-serif;
+      --mono:    'JetBrains Mono', monospace;
+      --serif:   'Instrument Serif', serif;
+      --radius:  12px;
+      --shadow:  0 4px 20px rgba(10,10,30,.08);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: var(--surface); color: var(--ink); min-height: 100vh; }
+    button { font-family: var(--font); cursor: pointer; }
+
+    /* HEADER */
+    .header { background: var(--ink); padding: 0 2rem; border-bottom: 1px solid var(--ink2); }
+    .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, #f59e0b, #f97316); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 600; color: white; }
+    .logo-title { font-size: 15px; font-weight: 800; color: white; letter-spacing: .1em; }
+    .logo-sub { font-size: 10px; color: #8888aa; letter-spacing: .05em; display: block; margin-top: -2px; }
+    .teacher-badge { background: #fef3c7; color: #92400e; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: .05em; }
+    .nav-link { color: #8888aa; font-size: 13px; text-decoration: none; padding: 6px 14px; border-radius: 6px; border: 1px solid #2d2d44; transition: all .15s; }
+    .nav-link:hover { color: white; border-color: #ffffff44; }
+
+    /* LAYOUT */
+    .main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .page-title { font-family: var(--serif); font-size: 28px; color: var(--ink); margin-bottom: 4px; }
+    .page-subtitle { font-size: 14px; color: var(--slate); margin-bottom: 1.5rem; }
+
+    /* METRICS */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+    .metric-card { background: white; border-radius: var(--radius); border: 1.5px solid var(--border); padding: 1.25rem; }
+    .metric-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+    .metric-value { font-family: var(--mono); font-size: 36px; font-weight: 500; letter-spacing: -2px; line-height: 1; color: var(--ink); }
+    .metric-value.red    { color: var(--red); }
+    .metric-value.amber  { color: var(--amber); }
+    .metric-value.green  { color: var(--green); }
+    .metric-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* GRID */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .full-col { margin-bottom: 1rem; }
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+    .panel { background: white; border-radius: var(--radius); border: 1.5px solid var(--border); padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
+    .panel-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    /* TOPIC BARS */
+    .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .topic-label { font-size: 12px; color: var(--slate); width: 130px; flex-shrink: 0; text-transform: capitalize; }
+    .topic-track { flex: 1; height: 10px; background: var(--surface); border-radius: 5px; overflow: hidden; border: 1px solid var(--border); }
+    .topic-fill-error { height: 100%; border-radius: 5px; background: var(--red); transition: width .7s ease; }
+    .topic-fill-conf  { height: 100%; border-radius: 5px; background: var(--amber); transition: width .7s ease; }
+    .topic-pct { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 36px; text-align: right; }
+    .topic-count { font-size: 11px; color: var(--muted); width: 50px; text-align: right; }
+
+    /* HALLUCINATION MATRIX */
+    .matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .matrix-cell { border-radius: var(--radius); padding: 1rem; text-align: center; }
+    .cell-tl { background: var(--red-l); border: 1.5px solid #fca5a5; }
+    .cell-tr { background: var(--green-l); border: 1.5px solid #6ee7b7; }
+    .cell-bl { background: #f0f9ff; border: 1.5px solid #bae6fd; }
+    .cell-br { background: var(--surface); border: 1.5px solid var(--border); }
+    .cell-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .cell-tl .cell-title { color: var(--red-d); }
+    .cell-tr .cell-title { color: var(--green-d); }
+    .cell-bl .cell-title { color: #0c4a6e; }
+    .cell-br .cell-title { color: var(--slate); }
+    .cell-value { font-family: var(--mono); font-size: 28px; font-weight: 500; letter-spacing: -1px; }
+    .cell-tl .cell-value { color: var(--red-d); }
+    .cell-tr .cell-value { color: var(--green-d); }
+    .cell-bl .cell-value { color: #0369a1; }
+    .cell-br .cell-value { color: var(--slate); }
+    .cell-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .matrix-label-h { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+    .matrix-label-v { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+
+    /* LOG TABLE */
+    .log-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .log-table th { text-align: left; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; padding: 6px 10px; border-bottom: 1.5px solid var(--border); }
+    .log-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--slate); vertical-align: middle; }
+    .log-table tr:last-child td { border-bottom: none; }
+    .log-table tr:hover td { background: var(--surface); }
+    .topic-pill { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; white-space: nowrap; text-transform: capitalize; }
+    .pill-systems  { background: var(--purple-l); color: var(--purple); }
+    .pill-word     { background: var(--amber-l); color: var(--amber-d); }
+    .pill-llm      { background: var(--red-l); color: var(--red-d); }
+    .pill-quad     { background: var(--teal-l); color: var(--teal); }
+    .pill-prob     { background: #fce7f3; color: #9d174d; }
+    .pill-default  { background: var(--surface); color: var(--slate); border: 1px solid var(--border); }
+    .verdict-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+    .v-correct { background: var(--green-l); color: var(--green-d); }
+    .v-wrong   { background: var(--red-l); color: var(--red-d); }
+    .flag-badge { font-size: 10px; font-weight: 700; background: var(--red-l); color: var(--red-d); padding: 2px 8px; border-radius: 4px; }
+    .conf-mono { font-family: var(--mono); font-size: 12px; }
+
+    /* EXPORT */
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px; border-radius: 8px; border: 1.5px solid var(--border); background: white; font-size: 12px; font-weight: 600; color: var(--slate); transition: all .15s; margin-bottom: 1rem; }
+    .export-btn:hover { border-color: var(--ink3); color: var(--ink); }
+    .refresh-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px; border-radius: 8px; border: none; background: var(--ink); font-size: 12px; font-weight: 600; color: white; transition: all .15s; margin-bottom: 1rem; margin-right: 8px; }
+    .refresh-btn:hover { background: var(--ink2); }
+
+    /* EMPTY */
+    .empty { text-align: center; padding: 3rem; color: var(--muted); font-size: 14px; }
+    .empty-icon { font-size: 32px; margin-bottom: 8px; opacity: .3; }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="/">
+      <div class="logo-mark">?!</div>
+      <div>
+        <span class="logo-title">CAPTURED</span>
+        <span class="logo-sub">AI Confidence Checker</span>
+      </div>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span class="teacher-badge">TEACHER VIEW</span>
+      <a class="nav-link" href="/">← Student view</a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="page-title">Results dashboard</div>
+  <div class="page-subtitle" id="lastUpdated">Loading data...</div>
+
+  <div style="margin-bottom:1rem">
+    <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+    <button class="export-btn" onclick="exportCSV()">↓ Export CSV</button>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Total checks</div>
+      <div class="metric-value" id="mTotal">—</div>
+      <div class="metric-sub">across all sessions</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">AI was wrong</div>
+      <div class="metric-value red" id="mWrong">—</div>
+      <div class="metric-sub" id="mErrorRate">—</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Hallucination zone</div>
+      <div class="metric-value amber" id="mHalluc">—</div>
+      <div class="metric-sub" id="mHalluRate">high conf + wrong</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Avg AI confidence</div>
+      <div class="metric-value" id="mConf">—</div>
+      <div class="metric-sub">self-reported</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+
+    <!-- TOPIC ERROR RATES -->
+    <div class="panel">
+      <div class="panel-title">Error rate by topic</div>
+      <div id="topicBars"><div class="empty"><div class="empty-icon">📊</div>No data yet</div></div>
+    </div>
+
+    <!-- HALLUCINATION MATRIX -->
+    <div class="panel">
+      <div class="panel-title">Confidence vs correctness matrix</div>
+      <div class="matrix-label-h"><span>Low confidence</span><span>High confidence (≥75%)</span></div>
+      <div class="matrix">
+        <div class="matrix-cell cell-tl">
+          <div class="cell-title">Wrong + high conf</div>
+          <div class="cell-value" id="mWrongHighConf">0</div>
+          <div class="cell-sub">Hallucination zone</div>
+        </div>
+        <div class="matrix-cell cell-tr">
+          <div class="cell-title">Correct + high conf</div>
+          <div class="cell-value" id="mRightHighConf">0</div>
+          <div class="cell-sub">Expected behavior</div>
+        </div>
+        <div class="matrix-cell cell-bl">
+          <div class="cell-title">Wrong + low conf</div>
+          <div class="cell-value" id="mWrongLowConf">0</div>
+          <div class="cell-sub">Uncertain + wrong</div>
+        </div>
+        <div class="matrix-cell cell-br">
+          <div class="cell-title">Correct + low conf</div>
+          <div class="cell-value" id="mRightLowConf">0</div>
+          <div class="cell-sub">Lucky guess</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOPIC CONFIDENCE -->
+  <div class="panel full-col">
+    <div class="panel-title">Average AI confidence by topic</div>
+    <div id="confBars"><div class="empty"><div class="empty-icon">📈</div>No data yet</div></div>
+  </div>
+
+  <!-- RECENT LOG -->
+  <div class="panel full-col">
+    <div class="panel-title">Recent results log</div>
+    <div id="logTable"><div class="empty"><div class="empty-icon">📋</div>No results yet</div></div>
+  </div>
+
+</main>
+
+<script>
+let allResults = [];
+
+const TOPIC_CLASS = {
+  systems_of_equations: 'pill-systems',
+  word_problems:        'pill-word',
+  llm_traps:            'pill-llm',
+  quadratics:           'pill-quad',
+  probability:          'pill-prob',
+};
+
+function topicPill(topic) {
+  const cls = TOPIC_CLASS[topic] || 'pill-default';
+  return `<span class="topic-pill ${cls}">${topic.replace(/_/g,' ')}</span>`;
+}
+
+async function loadData() {
+  try {
+    const [statsRes, resultsRes] = await Promise.all([
+      fetch('/results/stats'),
+      fetch('/results')
+    ]);
+    const stats   = await statsRes.json();
+    const results = await resultsRes.json();
+    allResults = results;
+
+    document.getElementById('lastUpdated').textContent =
+      `Last refreshed: ${new Date().toLocaleTimeString()} — ${stats.total} total records`;
+
+    // metrics
+    document.getElementById('mTotal').textContent   = stats.total || 0;
+    document.getElementById('mWrong').textContent   = stats.wrong || 0;
+    document.getElementById('mErrorRate').textContent = `${stats.error_rate || 0}% error rate`;
+    document.getElementById('mHalluc').textContent  = stats.hallucinations || 0;
+    document.getElementById('mHalluRate').textContent = `${stats.hallucination_rate || 0}% of all checks`;
+    document.getElementById('mConf').textContent    = stats.avg_confidence ? `${stats.avg_confidence}%` : '—';
+
+    // matrix
+    const hi = results.filter(r => r.confidence >= 75);
+    const lo = results.filter(r => r.confidence < 75);
+    document.getElementById('mWrongHighConf').textContent = hi.filter(r => !r.correct).length;
+    document.getElementById('mRightHighConf').textContent = hi.filter(r => r.correct).length;
+    document.getElementById('mWrongLowConf').textContent  = lo.filter(r => !r.correct).length;
+    document.getElementById('mRightLowConf').textContent  = lo.filter(r => r.correct).length;
+
+    // topic error bars
+    const byTopic = stats.by_topic || {};
+    if (Object.keys(byTopic).length === 0) {
+      document.getElementById('topicBars').innerHTML = '<div class="empty"><div class="empty-icon">📊</div>No data yet</div>';
+    } else {
+      document.getElementById('topicBars').innerHTML = Object.entries(byTopic)
+        .sort((a,b) => (b[1].wrong/b[1].total) - (a[1].wrong/a[1].total))
+        .map(([topic, d]) => {
+          const pct = Math.round((d.wrong / d.total) * 100);
+          return `<div class="topic-row">
+            <span class="topic-label">${topic.replace(/_/g,' ')}</span>
+            <div class="topic-track"><div class="topic-fill-error" style="width:${pct}%"></div></div>
+            <span class="topic-pct">${pct}%</span>
+            <span class="topic-count">${d.total} asks</span>
+          </div>`;
+        }).join('');
+    }
+
+    // topic confidence bars
+    if (Object.keys(byTopic).length === 0) {
+      document.getElementById('confBars').innerHTML = '<div class="empty"><div class="empty-icon">📈</div>No data yet</div>';
+    } else {
+      document.getElementById('confBars').innerHTML = Object.entries(byTopic)
+        .sort((a,b) => (b[1].conf_sum/b[1].total) - (a[1].conf_sum/a[1].total))
+        .map(([topic, d]) => {
+          const avg = Math.round(d.conf_sum / d.total);
+          return `<div class="topic-row">
+            <span class="topic-label">${topic.replace(/_/g,' ')}</span>
+            <div class="topic-track"><div class="topic-fill-conf" style="width:${avg}%"></div></div>
+            <span class="topic-pct">${avg}%</span>
+            <span class="topic-count">${d.total} asks</span>
+          </div>`;
+        }).join('');
+    }
+
+    // log table
+    const recent = [...results].reverse().slice(0, 30);
+    if (recent.length === 0) {
+      document.getElementById('logTable').innerHTML = '<div class="empty"><div class="empty-icon">📋</div>No results yet</div>';
+    } else {
+      document.getElementById('logTable').innerHTML = `
+        <table class="log-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Topic</th>
+              <th>Question</th>
+              <th>AI answer</th>
+              <th>Conf</th>
+              <th>Result</th>
+              <th>Flag</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${recent.map(r => `
+              <tr>
+                <td style="white-space:nowrap;font-size:11px">${new Date(r.timestamp).toLocaleString()}</td>
+                <td>${topicPill(r.topic)}</td>
+                <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.prompt}">${r.prompt?.slice(0,60)}...</td>
+                <td style="font-family:var(--mono);font-size:12px">${r.ai_answer || '—'}</td>
+                <td class="conf-mono">${r.confidence || 0}%</td>
+                <td><span class="verdict-badge ${r.correct ? 'v-correct' : 'v-wrong'}">${r.correct ? '✓ Correct' : '✗ Wrong'}</span></td>
+                <td>${r.flagged ? '<span class="flag-badge">⚠ DANGER</span>' : ''}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>`;
+    }
+
+  } catch (err) {
+    document.getElementById('lastUpdated').textContent = 'Error loading data — is the server running?';
+    console.error(err);
+  }
+}
+
+function exportCSV() {
+  if (!allResults.length) { alert('No data to export'); return; }
+  const rows = [['Timestamp','Topic','Question','AI Answer','Confidence','Correct','Flagged']];
+  allResults.forEach(r => rows.push([
+    r.timestamp, r.topic,
+    `"${(r.prompt||'').replace(/"/g,"'")}"`,
+    r.ai_answer, r.confidence,
+    r.correct ? 'YES' : 'NO',
+    r.flagged  ? 'YES' : 'NO'
+  ]));
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = `captured-results-${Date.now()}.csv`;
+  a.click();
+}
+
+// auto refresh every 30 seconds
+loadData();
+setInterval(loadData, 30000);
+</script>
+</body>
+</html>

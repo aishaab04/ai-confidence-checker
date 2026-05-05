@@ -1,0 +1,11 @@
+Receive questions 
+Call LLM  
+Parse LLM steps 
+Run final answers nad stepwise verification 
+run randmon subsittuion and counterexmaples
+ 
+
+ return strcutured verdicts 
+
+
+ 

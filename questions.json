@@ -1,0 +1,370 @@
+[
+  {
+    "id": "sys001",
+    "label": "System of equations — substitution trap",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "answer": "x=3, y=2",
+    "topic": "systems_of_equations",
+    "wolfram_query": "solve {2x + 3y = 12, x - y = 1}"
+  },
+  {
+    "id": "sys002",
+    "label": "System — no solution detection",
+    "prompt": "Solve the system: 3x + 6y = 9 and x + 2y = 4",
+    "answer": "no solution",
+    "topic": "systems_of_equations",
+    "wolfram_query": "solve {3x + 6y = 9, x + 2y = 4}"
+  },
+  {
+    "id": "sys003",
+    "label": "System — infinite solutions",
+    "prompt": "Solve the system: 2x + 4y = 8 and x + 2y = 4",
+    "answer": "infinite solutions",
+    "topic": "systems_of_equations",
+    "wolfram_query": "solve {2x + 4y = 8, x + 2y = 4}"
+  },
+  {
+    "id": "sys004",
+    "label": "System — three variables",
+    "prompt": "Solve the system: x + y + z = 6, 2x - y + z = 3, x + 2y - z = 2",
+    "answer": "x=1, y=2, z=3",
+    "topic": "systems_of_equations",
+    "wolfram_query": "solve {x + y + z = 6, 2x - y + z = 3, x + 2y - z = 2}"
+  },
+  {
+    "id": "sys005",
+    "label": "System — elimination method",
+    "prompt": "Solve using elimination: 4x + 2y = 14 and 3x - 2y = 7",
+    "answer": "x=3, y=1",
+    "topic": "systems_of_equations",
+    "wolfram_query": "solve {4x + 2y = 14, 3x - 2y = 7}"
+  },
+  {
+    "id": "sys006",
+    "label": "System — fractions",
+    "prompt": "Solve the system: x/2 + y/3 = 4 and x/4 - y/6 = 1",
+    "answer": "x=6, y=6",
+    "topic": "systems_of_equations",
+    "wolfram_query": "solve {x/2 + y/3 = 4, x/4 - y/6 = 1}"
+  },
+  {
+    "id": "wp001",
+    "label": "Word problem — age trap",
+    "prompt": "Maria is 3 times as old as her daughter. In 10 years, she will be twice as old as her daughter. How old is Maria now?",
+    "answer": "30",
+    "topic": "word_problems",
+    "wolfram_query": "solve {m = 3d, m + 10 = 2(d + 10)}"
+  },
+  {
+    "id": "wp002",
+    "label": "Word problem — mixture",
+    "prompt": "A chemist has a 20% acid solution and a 50% acid solution. How many liters of each should be mixed to get 30 liters of a 30% acid solution? Use x for the 20% solution and y for the 50% solution.",
+    "answer": "x=20, y=10",
+    "topic": "word_problems",
+    "wolfram_query": "solve {x + y = 30, 0.2x + 0.5y = 0.3*30}"
+  },
+  {
+    "id": "wp003",
+    "label": "Word problem — rate and distance",
+    "prompt": "Two trains leave the same station at the same time traveling in opposite directions. One travels at 60 mph and the other at 80 mph. After how many hours will they be 420 miles apart?",
+    "answer": "3",
+    "topic": "word_problems",
+    "wolfram_query": "solve 60t + 80t = 420"
+  },
+  {
+    "id": "wp004",
+    "label": "Word problem — work rate",
+    "prompt": "Alice can complete a project in 6 hours and Bob can complete the same project in 4 hours. How long will it take them working together?",
+    "answer": "2.4",
+    "topic": "word_problems",
+    "wolfram_query": "1/6 + 1/4 = 1/t, solve for t"
+  },
+  {
+    "id": "wp005",
+    "label": "Word problem — percent change trap",
+    "prompt": "A store raises prices by 20% then offers a 20% discount. What is the net percent change from the original price?",
+    "answer": "-4",
+    "topic": "word_problems",
+    "wolfram_query": "1.2 * 0.8"
+  },
+  {
+    "id": "wp006",
+    "label": "Word problem — coin problem",
+    "prompt": "A piggy bank has 30 coins, all nickels and dimes, worth $2.10 total. How many of each coin are there? Use n for nickels and d for dimes.",
+    "answer": "n=18, d=12",
+    "topic": "word_problems",
+    "wolfram_query": "solve {n + d = 30, 5n + 10d = 210}"
+  },
+  {
+    "id": "wp007",
+    "label": "Word problem — consecutive integers",
+    "prompt": "The sum of three consecutive odd integers is 75. What are the three integers? Return them comma separated.",
+    "answer": "23, 25, 27",
+    "topic": "word_problems",
+    "wolfram_query": "solve n + (n+2) + (n+4) = 75"
+  },
+  {
+    "id": "wp008",
+    "label": "Word problem — investment",
+    "prompt": "Sarah invests $8000 total in two accounts. One earns 5% interest and the other earns 3% interest. After one year she earns $340 total interest. How much did she invest in each account? Use x for the 5% account and y for the 3% account.",
+    "answer": "x=7000, y=1000",
+    "topic": "word_problems",
+    "wolfram_query": "solve {x + y = 8000, 0.05x + 0.03y = 340}"
+  },
+  {
+    "id": "llm001",
+    "label": "High confidence trap — 0.999... = 1",
+    "prompt": "Is 0.999... (repeating) exactly equal to 1? Answer yes or no and prove your answer mathematically.",
+    "answer": "yes",
+    "topic": "llm_traps",
+    "wolfram_query": "0.999... = 1"
+  },
+  {
+    "id": "llm002",
+    "label": "High confidence trap — order of operations",
+    "prompt": "Evaluate: 6 / 2(1 + 2). Return only the number.",
+    "answer": "9",
+    "topic": "llm_traps",
+    "wolfram_query": "6 / 2 * (1 + 2)"
+  },
+  {
+    "id": "llm003",
+    "label": "High confidence trap — birthday problem",
+    "prompt": "In a room of 23 people, what is the probability that at least two share the same birthday? Give a percentage rounded to 2 decimal places. Return only the number without the % sign.",
+    "answer": "50.73",
+    "topic": "llm_traps",
+    "wolfram_query": "birthday problem 23 people"
+  },
+  {
+    "id": "llm004",
+    "label": "High confidence trap — Monty Hall",
+    "prompt": "In the Monty Hall problem you pick door 1. The host opens door 3 revealing a goat. What is your probability of winning if you switch? Express as a fraction.",
+    "answer": "2/3",
+    "topic": "llm_traps",
+    "wolfram_query": "Monty Hall problem probability"
+  },
+  {
+    "id": "llm005",
+    "label": "High confidence trap — harmonic mean speed",
+    "prompt": "A car travels from A to B at 40 mph and returns at 60 mph. What is the average speed for the entire trip? Return only the number.",
+    "answer": "48",
+    "topic": "llm_traps",
+    "wolfram_query": "harmonic mean of 40 and 60"
+  },
+  {
+    "id": "llm006",
+    "label": "High confidence trap — compound interest",
+    "prompt": "You invest $1000 at 10% annual interest compounded monthly for 1 year. What is the final amount? Return only the number rounded to 2 decimal places.",
+    "answer": "1104.71",
+    "topic": "llm_traps",
+    "wolfram_query": "1000 * (1 + 0.10/12)^12"
+  },
+  {
+    "id": "llm007",
+    "label": "High confidence trap — sqrt of negative",
+    "prompt": "Solve x^2 + 4 = 0. Return solutions in the format x=2i, x=-2i",
+    "answer": "x=2i, x=-2i",
+    "topic": "llm_traps",
+    "wolfram_query": "solve x^2 + 4 = 0"
+  },
+  {
+    "id": "llm008",
+    "label": "High confidence trap — infinite series",
+    "prompt": "What is the sum of the infinite geometric series: 1 + 1/2 + 1/4 + 1/8 + ...? Return only the number.",
+    "answer": "2",
+    "topic": "llm_traps",
+    "wolfram_query": "sum 1/2^n for n=0 to infinity"
+  },
+  {
+    "id": "llm009",
+    "label": "High confidence trap — log rules",
+    "prompt": "Simplify: log(100) + log(1000) - log(10). Use base 10. Return only the number.",
+    "answer": "4",
+    "topic": "llm_traps",
+    "wolfram_query": "log10(100) + log10(1000) - log10(10)"
+  },
+  {
+    "id": "llm010",
+    "label": "High confidence trap — Fibonacci",
+    "prompt": "A sequence is: 1, 1, 2, 3, 5, 8, 13, 21. What is the next term and the 20th term? Return both numbers comma separated.",
+    "answer": "34, 6765",
+    "topic": "llm_traps",
+    "wolfram_query": "Fibonacci(20)"
+  },
+  {
+    "id": "quad001",
+    "label": "Quadratic — discriminant negative",
+    "prompt": "Solve: 2x^2 - x + 10 = 9. Return solutions in the format x=value, x=value",
+    "answer": "x=(1+i*sqrt(7))/4, x=(1-i*sqrt(7))/4",
+    "topic": "quadratics",
+    "wolfram_query": "solve 2x^2 - x + 10 = 9"
+  },
+  {
+    "id": "quad002",
+    "label": "Quadratic — completing the square",
+    "prompt": "Solve by completing the square: x^2 + 6x + 5 = 0. Return solutions in the format x=value, x=value",
+    "answer": "x=-1, x=-5",
+    "topic": "quadratics",
+    "wolfram_query": "solve x^2 + 6x + 5 = 0"
+  },
+  {
+    "id": "quad003",
+    "label": "Quadratic — vertex form",
+    "prompt": "Write y = x^2 - 4x + 7 in vertex form. Return in the format y=(x-h)^2+k and state the vertex as h,k",
+    "answer": "y=(x-2)^2+3, 2, 3",
+    "topic": "quadratics",
+    "wolfram_query": "vertex of x^2 - 4x + 7"
+  },
+  {
+    "id": "quad004",
+    "label": "Quadratic — word problem",
+    "prompt": "A ball is thrown upward with height h(t) = -16t^2 + 64t + 5 feet. What is the maximum height and at what time does it occur? Return both numbers comma separated, height first.",
+    "answer": "69, 2",
+    "topic": "quadratics",
+    "wolfram_query": "maximize -16t^2 + 64t + 5"
+  },
+  {
+    "id": "quad005",
+    "label": "Quadratic — factoring trap",
+    "prompt": "Factor completely: 6x^2 + 11x - 10. Return in the format (ax+b)(cx+d)",
+    "answer": "(2x+5)(3x-2)",
+    "topic": "quadratics",
+    "wolfram_query": "factor 6x^2 + 11x - 10"
+  },
+  {
+    "id": "prob001",
+    "label": "Probability — conditional",
+    "prompt": "A bag has 4 red and 6 blue marbles. You draw 2 without replacement. What is the probability both are red? Return as a fraction.",
+    "answer": "2/15",
+    "topic": "probability",
+    "wolfram_query": "4/10 * 3/9"
+  },
+  {
+    "id": "prob002",
+    "label": "Probability — complement rule",
+    "prompt": "A die is rolled 4 times. What is the probability of getting at least one 6? Return as a fraction.",
+    "answer": "671/1296",
+    "topic": "probability",
+    "wolfram_query": "1 - (5/6)^4"
+  },
+  {
+    "id": "prob003",
+    "label": "Probability — combinations",
+    "prompt": "A committee of 3 is chosen from 8 people. How many different committees are possible? Return only the number.",
+    "answer": "56",
+    "topic": "probability",
+    "wolfram_query": "C(8,3)"
+  },
+  {
+    "id": "prob004",
+    "label": "Probability — Bayes trap",
+    "prompt": "A disease affects 1% of the population. A test is 99% accurate for both positive and negative results. If you test positive, what is the probability you actually have the disease? Return as a percentage rounded to nearest whole number.",
+    "answer": "50",
+    "topic": "probability",
+    "wolfram_query": "Bayes theorem P(disease|positive) with P(disease)=0.01 P(positive|disease)=0.99 P(positive|no disease)=0.01"
+  },
+  {
+    "id": "exp001",
+    "label": "Exponents — negative fractional",
+    "prompt": "Evaluate: 27^(-2/3). Return as a fraction.",
+    "answer": "1/9",
+    "topic": "exponents",
+    "wolfram_query": "27^(-2/3)"
+  },
+  {
+    "id": "exp002",
+    "label": "Exponents — equation solving",
+    "prompt": "Solve for x: 2^(x+1) = 32. Return in the format x=value",
+    "answer": "x=4",
+    "topic": "exponents",
+    "wolfram_query": "solve 2^(x+1) = 32"
+  },
+  {
+    "id": "exp003",
+    "label": "Exponents — exponential growth",
+    "prompt": "A bacteria population doubles every 3 hours. Starting with 500 bacteria, how many will there be after 24 hours? Return only the number.",
+    "answer": "128000",
+    "topic": "exponents",
+    "wolfram_query": "500 * 2^(24/3)"
+  },
+  {
+    "id": "geo001",
+    "label": "Geometry — similar triangles",
+    "prompt": "Two similar triangles have sides in ratio 3:5. If the area of the smaller triangle is 27 sq cm, what is the area of the larger? Return only the number.",
+    "answer": "75",
+    "topic": "geometry",
+    "wolfram_query": "27 * (5/3)^2"
+  },
+  {
+    "id": "geo002",
+    "label": "Geometry — circle sector",
+    "prompt": "A sector of a circle has radius 8 cm and central angle 135 degrees. What is the area of the sector? Use pi = 3.14159. Return only the number rounded to 1 decimal place.",
+    "answer": "75.4",
+    "topic": "geometry",
+    "wolfram_query": "area of sector radius 8 angle 135 degrees"
+  },
+  {
+    "id": "geo003",
+    "label": "Geometry — 3D volume",
+    "prompt": "A cone has radius 5 cm and height 12 cm. What is its volume? Use pi = 3.14159. Return only the number rounded to 2 decimal places.",
+    "answer": "314.16",
+    "topic": "geometry",
+    "wolfram_query": "(1/3) * pi * 5^2 * 12"
+  },
+  {
+    "id": "alg001",
+    "label": "Algebra — rational equation trap",
+    "prompt": "Solve: 1/(x-2) + 1/(x+2) = 4/(x^2-4). Return 'no solution' if there is no valid solution.",
+    "answer": "no solution",
+    "topic": "algebra",
+    "wolfram_query": "solve 1/(x-2) + 1/(x+2) = 4/(x^2-4)"
+  },
+  {
+    "id": "alg002",
+    "label": "Algebra — absolute value",
+    "prompt": "Solve: |2x - 5| = 11. Return solutions in the format x=value, x=value",
+    "answer": "x=8, x=-3",
+    "topic": "algebra",
+    "wolfram_query": "solve |2x - 5| = 11"
+  },
+  {
+    "id": "alg003",
+    "label": "Algebra — function composition",
+    "prompt": "If f(x) = 2x + 3 and g(x) = x^2 - 1, find f(g(3)) and g(f(3)). Return both comma separated, f(g(3)) first.",
+    "answer": "19, 80",
+    "topic": "algebra",
+    "wolfram_query": "f(x) = 2x+3, g(x) = x^2-1, f(g(3)) and g(f(3))"
+  },
+  {
+    "id": "stat001",
+    "label": "Statistics — standard deviation trap",
+    "prompt": "Find the population standard deviation of: 2, 4, 4, 4, 5, 5, 7, 9. Return only the number.",
+    "answer": "2",
+    "topic": "statistics",
+    "wolfram_query": "population standard deviation of {2, 4, 4, 4, 5, 5, 7, 9}"
+  },
+  {
+    "id": "stat002",
+    "label": "Statistics — mean vs median",
+    "prompt": "The salaries at a company are: $30000, $32000, $35000, $38000, $40000, $200000. Calculate the mean and median. Return both comma separated, mean first.",
+    "answer": "62500, 36500",
+    "topic": "statistics",
+    "wolfram_query": "mean and median of {30000, 32000, 35000, 38000, 40000, 200000}"
+  },
+  {
+    "id": "calc001",
+    "label": "Pre-calculus — limits",
+    "prompt": "Evaluate the limit: lim(x->2) of (x^2 - 4)/(x - 2). Return only the number.",
+    "answer": "4",
+    "topic": "precalculus",
+    "wolfram_query": "limit (x^2 - 4)/(x - 2) as x approaches 2"
+  },
+  {
+    "id": "calc002",
+    "label": "Pre-calculus — arithmetic sequence",
+    "prompt": "The 5th term of an arithmetic sequence is 22 and the 10th term is 42. Find the first term and common difference. Return both comma separated, first term first.",
+    "answer": "6, 4",
+    "topic": "precalculus",
+    "wolfram_query": "arithmetic sequence 5th term 22 10th term 42"
+  }
+]

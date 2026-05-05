@@ -1,0 +1,356 @@
+[
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:25:26.982461"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 2,
+      "description": "Substitute y into the first equation 2x + 3y = 12",
+      "calculation": "2x + 3(x - 1) = 12",
+      "verdict": "wrong",
+      "wolfram_result": "5 x - 15 = 0",
+      "error": "Wolfram evaluated this as: \"5 x - 15 = 0\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-04T23:26:30.258433"
+  },
+  {
+    "question_id": "geo003",
+    "topic": "geometry",
+    "prompt": "A cone has radius 5 cm and height 12 cm. What is its volume? Use pi = 3.14159. Return only the number rounded to 2 decimal places.",
+    "ai_answer": "196.35",
+    "correct": false,
+    "confidence": 95,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:27:17.365973"
+  },
+  {
+    "question_id": "geo003",
+    "topic": "geometry",
+    "prompt": "A cone has radius 5 cm and height 12 cm. What is its volume? Use pi = 3.14159. Return only the number rounded to 2 decimal places.",
+    "ai_answer": "314.16",
+    "correct": true,
+    "confidence": 100,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:27:59.924456"
+  },
+  {
+    "question_id": "geo003",
+    "topic": "geometry",
+    "prompt": "A cone has radius 5 cm and height 12 cm. What is its volume? Use pi = 3.14159. Return only the number rounded to 2 decimal places.",
+    "ai_answer": "78.54",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:28:07.151135"
+  },
+  {
+    "question_id": "llm001",
+    "topic": "llm_traps",
+    "prompt": "Is 0.999... (repeating) exactly equal to 1? Answer yes or no and prove your answer mathematically.",
+    "ai_answer": "yes 1=1, 0.999...=1, both are equal.",
+    "correct": false,
+    "confidence": 95,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": {
+      "number": 1,
+      "description": "Let x equal 0.999...",
+      "calculation": "x = 0.999...",
+      "verdict": "wrong",
+      "wolfram_result": "x - 1 = 0",
+      "error": "Wolfram evaluated this as: \"x - 1 = 0\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-04T23:29:05.152498"
+  },
+  {
+    "question_id": "llm002",
+    "topic": "llm_traps",
+    "prompt": "Evaluate: 6 / 2(1 + 2). Return only the number.",
+    "ai_answer": "9",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:29:39.267771"
+  },
+  {
+    "question_id": "llm003",
+    "topic": "llm_traps",
+    "prompt": "In a room of 23 people, what is the probability that at least two share the same birthday? Give a percentage rounded to 2 decimal places. Return only the number without the % sign.",
+    "ai_answer": "50.73",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:29:47.013616"
+  },
+  {
+    "question_id": "llm004",
+    "topic": "llm_traps",
+    "prompt": "In the Monty Hall problem you pick door 1. The host opens door 3 revealing a goat. What is your probability of winning if you switch? Express as a fraction.",
+    "ai_answer": "2/3",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:30:00.133375"
+  },
+  {
+    "question_id": "llm005",
+    "topic": "llm_traps",
+    "prompt": "A car travels from A to B at 40 mph and returns at 60 mph. What is the average speed for the entire trip? Return only the number.",
+    "ai_answer": "48",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:30:04.450791"
+  },
+  {
+    "question_id": "llm006",
+    "topic": "llm_traps",
+    "prompt": "You invest $1000 at 10% annual interest compounded monthly for 1 year. What is the final amount? Return only the number rounded to 2 decimal places.",
+    "ai_answer": "1104.71",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:30:08.442626"
+  },
+  {
+    "question_id": "llm007",
+    "topic": "llm_traps",
+    "prompt": "Solve x^2 + 4 = 0. Return solutions in the format x=2i, x=-2i",
+    "ai_answer": "x=2i, x=-2i",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:30:11.547905"
+  },
+  {
+    "question_id": "llm008",
+    "topic": "llm_traps",
+    "prompt": "What is the sum of the infinite geometric series: 1 + 1/2 + 1/4 + 1/8 + ...? Return only the number.",
+    "ai_answer": "2",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:30:14.920390"
+  },
+  {
+    "question_id": "llm009",
+    "topic": "llm_traps",
+    "prompt": "Simplify: log(100) + log(1000) - log(10). Use base 10. Return only the number.",
+    "ai_answer": "3",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:30:17.814641"
+  },
+  {
+    "question_id": "llm009",
+    "topic": "llm_traps",
+    "prompt": "Simplify: log(100) + log(1000) - log(10). Use base 10. Return only the number.",
+    "ai_answer": "4",
+    "correct": true,
+    "confidence": 100,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:31:00.015699"
+  },
+  {
+    "question_id": "quad001",
+    "topic": "quadratics",
+    "prompt": "Solve: 2x^2 - x + 10 = 9. Return solutions in the format x=value, x=value",
+    "ai_answer": "x=3, x=1.66667",
+    "correct": false,
+    "confidence": 80,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:31:54.724645"
+  },
+  {
+    "question_id": "quad001",
+    "topic": "quadratics",
+    "prompt": "Solve: 2x^2 - x + 10 = 9. Return solutions in the format x=value, x=value",
+    "ai_answer": "x=1/4+(i\u221a7)/4, x=1/4-(i\u221a7)/4",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:32:55.353732"
+  },
+  {
+    "question_id": "sys006",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system: x/2 + y/3 = 4 and x/4 - y/6 = 1",
+    "ai_answer": "x=8, y=6",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-04T23:55:10.863430"
+  },
+  {
+    "question_id": "sys006",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system: x/2 + y/3 = 4 and x/4 - y/6 = 1",
+    "ai_answer": "x=6, y=3",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": {
+      "number": 11,
+      "description": "Final calculation for y",
+      "calculation": "y = 6/2",
+      "verdict": "wrong",
+      "wolfram_result": "y - 3 = 0",
+      "error": "Wolfram evaluated this as: \"y - 3 = 0\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-04T23:56:50.734224"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "substitution_check": {
+      "verified": true,
+      "checks": [
+        {
+          "equation": "2x + 3y = 12",
+          "left": 12.0,
+          "right": 12,
+          "passed": true,
+          "reason": "12.0 = 12"
+        },
+        {
+          "equation": "x - y = 1",
+          "left": 1.0,
+          "right": 1,
+          "passed": true,
+          "reason": "1.0 = 1"
+        }
+      ],
+      "method": "substitution",
+      "reason": "all equations satisfied"
+    },
+    "first_error": null,
+    "timestamp": "2026-05-05T00:31:40.138555"
+  },
+  {
+    "question_id": "wp006",
+    "topic": "word_problems",
+    "prompt": "A piggy bank has 30 coins, all nickels and dimes, worth $2.10 total. How many of each coin are there? Use n for nickels and d for dimes.",
+    "ai_answer": "n=6, d=24",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "substitution_check": null,
+    "first_error": null,
+    "timestamp": "2026-05-05T00:32:12.352221"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "substitution_check": {
+      "verified": true,
+      "checks": [
+        {
+          "equation": "2x + 3y = 12",
+          "left": 12.0,
+          "right": 12,
+          "passed": true,
+          "reason": "12.0 = 12"
+        },
+        {
+          "equation": "x - y = 1",
+          "left": 1.0,
+          "right": 1,
+          "passed": true,
+          "reason": "1.0 = 1"
+        }
+      ],
+      "method": "substitution",
+      "reason": "all equations satisfied"
+    },
+    "first_error": {
+      "number": 2,
+      "description": "Substitute x in the first equation 2x + 3y = 12.",
+      "calculation": "2(y + 1) + 3y = 12",
+      "verdict": "wrong",
+      "wolfram_result": "5 y - 10 = 0",
+      "error": "Wolfram evaluated this as: \"5 y - 10 = 0\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-05T00:32:45.764917"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 2,
+      "description": "Substitute x into the first equation",
+      "calculation": "2(y + 1) + 3y = 12",
+      "verdict": "wrong",
+      "wolfram_result": "5 y - 10 = 0",
+      "error": "Wolfram evaluated this as: \"5 y - 10 = 0\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-05T00:48:54.431962"
+  }
+]
