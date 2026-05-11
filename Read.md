@@ -39,6 +39,7 @@ confidenceChek/
 ├── questions.json         # 45 curated math problems across 9 topics
 ├── session_results.json   # auto-generated — persists all check results
 ├── templates/
+│   ├── home.html          # landing page — intro, purpose, how to use
 │   ├── index.html         # student interface
 │   └── teacher.html       # teacher dashboard
 └── static/
@@ -77,8 +78,34 @@ uvicorn confidence:app --reload
 
 ### 4. Open in browser
 
-- **Student view:** `http://localhost:8000`
+- **Home page:** `http://localhost:8000`
+- **Student app:** `http://localhost:8000/app`
 - **Teacher dashboard:** `http://localhost:8000/teacher`
+
+---
+
+## Pages
+
+### Home page — `/`
+
+The landing page introduces the project before the student interacts with any AI. It contains:
+
+- Project name, purpose, and motivation
+- Four purpose cards explaining what CAPTURED does
+- Topic bank overview showing all 9 question categories
+- Step-by-step how-to-use guide with the three-button flow
+- Hallucination danger zone explanation with the 2×2 matrix
+- Direct links to the student app and teacher dashboard
+
+The home page is served from `templates/home.html` and uses no JavaScript — it is purely informational and loads instantly.
+
+### Student app — `/app`
+
+The main interaction interface where students select questions, generate AI answers, and verify them. See the full interaction flow below.
+
+### Teacher dashboard — `/teacher`
+
+Analytics view showing aggregated results across all sessions. See the Teacher dashboard section below.
 
 ---
 
@@ -86,7 +113,8 @@ uvicorn confidence:app --reload
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/` | Student interface |
+| `GET` | `/` | Home page — project introduction |
+| `GET` | `/app` | Student interface |
 | `GET` | `/teacher` | Teacher dashboard |
 | `GET` | `/questions` | Returns all questions as JSON |
 | `POST` | `/quick` | AI answers with no reasoning shown |
@@ -100,6 +128,10 @@ uvicorn confidence:app --reload
 ## How a question flows through the system
 
 ```
+Student visits home page (/)
+    → reads project intro, how-to-use, hallucination explanation
+    → clicks "Launch App" → redirected to /app
+
 Student clicks "Generate with Steps"
     → POST /generate
     → GPT-4o-mini solves problem in STEP/CALCULATION format
@@ -111,7 +143,7 @@ Student clicks "Check Answer"
     → check_answer() compares final answer to questions.json
     → verify_steps_with_wolfram() sends each CALCULATION to Wolfram
     → context tracking catches wrong values carried forward
-    → hallucination flag set if confidence ≥ 75% AND wrong
+    → hallucination flag set if confidence >= 75% AND wrong
     → result saved to session_results.json
     → steps re-rendered with green/red badges
     → verdict + hallucination alert shown
@@ -168,11 +200,10 @@ Edit `questions.json`. Each question requires:
 
 Visit `http://localhost:8000/teacher` to see:
 
-- **Metrics** — total checks, error count, hallucination count, average confidence
+- **Metrics** — total checks, error count, average confidence
 - **Method comparison** — Quick Answer vs Generate with Steps error rates
 - **Error rate by topic** — which topics the AI fails most
-- **Confidence vs correctness matrix** — the 2×2 hallucination visualization
-- **Average confidence by topic** — where the AI is most overconfident
+- **Confidence vs correctness matrix** — the 2x2 hallucination visualization
 - **Results log** — last 30 checks with full detail
 - **CSV export** — download all results for analysis
 
@@ -182,13 +213,13 @@ The dashboard reads from `session_results.json` and auto-refreshes every 30 seco
 
 ## Key concepts
 
-**Hallucination danger zone** — when the AI reports high confidence (≥75%) but gets the answer wrong. This is the central finding the tool is designed to demonstrate.
+**Hallucination danger zone** — when the AI reports high confidence (>=75%) but gets the answer wrong. This is the central finding the tool is designed to demonstrate.
 
 **Method comparison** — Quick Answer (no reasoning) vs Generate with Steps. The hypothesis is that generating reasoning reduces errors because the model has to commit to intermediate steps.
 
-**Step verification** — each `CALCULATION` line in the AI's reasoning is sent to Wolfram Alpha with the original problem as context, not in isolation. This catches errors that look locally correct but violate the problem constraints.
+**Step verification** — each CALCULATION line in the AI's reasoning is sent to Wolfram Alpha with the original problem as context, not in isolation. This catches errors that look locally correct but violate the problem constraints.
 
-**Context tracking** — as steps are verified, established variable values are stored. If a later step uses a contradicting value, it's flagged immediately without an API call.
+**Context tracking** — as steps are verified, established variable values are stored. If a later step uses a contradicting value, it is flagged immediately without an API call.
 
 ---
 
@@ -196,10 +227,10 @@ The dashboard reads from `session_results.json` and auto-refreshes every 30 seco
 
 Follows the Abello DIVA-CS526 project design framework (Rutgers University):
 
-1. Data — `questions.json` as curated dataset
+1. Data — questions.json as curated dataset
 2. Questions — measuring confidence vs correctness
 3. Mode of processing — FastAPI pipeline with three verification layers
-4. Visual representation — confidence bar, step cards, scatter plot, 2×2 matrix
+4. Visual representation — confidence bar, step cards, scatter plot, 2x2 matrix
 5. Interactivity — three-button flow, topic filters, real-time tracker
 6. Analytics — teacher dashboard with persistent aggregated results
 7. Development documentation — see tech stack above
@@ -209,9 +240,9 @@ Follows the Abello DIVA-CS526 project design framework (Rutgers University):
 
 ## Known limitations
 
-- Wolfram step verification returns `unverified` for complex multi-variable expressions
+- Wolfram step verification returns unverified for complex multi-variable expressions
 - Step verification only runs when Generate with Steps is used, not Quick Answer
-- `session_results.json` is a flat file — not suitable for large-scale multi-classroom deployment
+- session_results.json is a flat file — not suitable for large-scale multi-classroom deployment
 - No student authentication — results are not tied to individual students across sessions
 
 ---
