@@ -289,7 +289,7 @@ async function checkAnswer() {
       body: JSON.stringify({
         question_id: currentQuestion.id,
         finalAnswer: latestAI.finalAnswer,
-        stepsRaw:    latestAI.steps_raw || "", 
+        stepsRaw:    latestAI.steps_raw || "",
         confidence:   latestAI.confidence || 0 
       })
     });
@@ -309,31 +309,6 @@ async function checkAnswer() {
       els.verdict.textContent = '❌ Incorrect';
       els.verdict.className = 'verdict incorrect';
     }
-
-    // show substitution check if available
-if (data.substitution_check && data.substitution_check.verified !== null) {
-  const sub = data.substitution_check
-  const color = sub.verified ? 'var(--green-d)' : 'var(--red-d)'
-  const bg    = sub.verified ? 'var(--green-l)' : 'var(--red-l)'
-  const icon  = sub.verified ? '✓' : '✗'
-
-  const subHtml = `
-    <div style="background:${bg};border-radius:var(--radius-sm);padding:12px 14px;margin-top:10px">
-      <div style="font-size:11px;font-weight:700;color:${color};text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">
-        ${icon} Substitution verification
-      </div>
-      ${sub.checks.map(c => `
-        <div style="font-family:var(--font-mono);font-size:12px;color:${color};margin-bottom:4px">
-          ${c.equation} → ${c.reason}
-        </div>
-      `).join('')}
-      <div style="font-size:12px;color:${color};margin-top:6px;font-style:italic">
-        ${sub.reason}
-      </div>
-    </div>`
-
-  els.resultCard.querySelector('.result-inner').insertAdjacentHTML('beforeend', subHtml)
-}
 
     // re-render steps with colors now that check is done
     if (data.steps && data.steps.length > 0) {

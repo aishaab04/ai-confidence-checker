@@ -55,10 +55,15 @@ def save_result(entry: dict):
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 WOLFRAM_APP_ID = os.getenv("WOLFRAM_APP_ID")
-# ── ROUTES ───────────────────────────────────────────────────
+
 @app.get("/")
-def read_root():
+def home():
+    return FileResponse(BASE_DIR / "templates" / "home.html")
+
+@app.get("/app")
+def student_app():
     return FileResponse(BASE_DIR / "templates" / "index.html")
+
 
 @app.get("/questions")
 def get_questions():
@@ -66,6 +71,7 @@ def get_questions():
 
 @app.post("/generate")
 def generate(request: GenerateRequest):
+    global last_method_used
     last_method_used = "explain"
     q = QUESTIONS.get(request.question_id)
     print(f"Received question_id: {request.question_id}")
@@ -94,6 +100,7 @@ def generate(request: GenerateRequest):
 
 @app.post("/quick")
 def generate_quick(request: GenerateRequest):
+     global last_method_used
      last_method_used = "quick"
      q = QUESTIONS.get(request.question_id)
      if not q:
@@ -179,7 +186,9 @@ def get_stats():
 def teacher_dashboard():
     return FileResponse(BASE_DIR / "templates" / "teacher.html")
 
-# ── LLM CALL ─────────────────────────────────────────────────
+
+
+# LLM Generation method 
 def generate_answer(prompt: str):
     schema = {
         "name": "MathAnswer",
@@ -198,6 +207,16 @@ def generate_answer(prompt: str):
         "strict": True,
     }
 
+
+    # AI call can be formatted, very specific to match the needed description of this algorithm to match wolfram
+
+
+    """"
+    - Issues found so needed to be speiciifc
+        - AI using variable references in steps instead of answers 
+        - formatting the final answer differently than what is saved in questions.json 
+        - Answers or steps coming up in one line so harder to break them up 
+    """
     system_prompt = """You are a math solver. Solve the problem step by step.
 
 For the steps_raw field, format EXACTLY like this:
@@ -221,6 +240,9 @@ Rules:
 - Never write STEP and CALCULATION on the same line
 - Never run steps together without a line break between them
 - Never end finalAnswer with a period, comma, or any punctuation
+- Never use "..." or ellipsis in calculations — write out all terms explicitly or use a computed numeric value
+- Never use words like "result", "value", "answer", "previous" as variable names in calculations
+- If a calculation depends on a previous result, use the actual numeric value computed in that step
 """
 
     resp = client.responses.create(
@@ -234,6 +256,8 @@ Rules:
 
     return json.loads(resp.output_text)
 
+
+# Generates answers when no expalantion 
 def generate_quick_answer(prompt: str):
     schema = {
         "name": "QuickAnswer",
@@ -253,12 +277,16 @@ def generate_quick_answer(prompt: str):
     system_prompt = """You are a math solver. Answer the question directly.
 
 Rules:
-- Return only the final answer — no steps, no explanation, no reasoning
+- Return only the final answer - no steps, no explanation, no reasoning
 - For single variable answers, return just the number e.g. "4" or "x=3"
-- For multi-variable answers, return ALL variables in the format "x=3, y=2"
-- Never include words like "and" or "the solution is" — just the values
+- For multi-variable answers, return ALL variables in the format "x=3, y=2" or "x=1, y=2, z=3" - never return just one variable when the problem asks for multiple unknowns
+- Never include words like "and" or "the solution is" - just the values
 - Never end finalAnswer with a period, comma, or any punctuation
-- Be honest about confidence — lower it for tricky problems"""
+- The finalAnswer must contain only a pure mathematical expression - no words, no units, no arrows
+- Use explicit multiplication - always write 2*x not 2x
+- Write assignments as clean expressions - "x=3" not "x is 3" or "x equals 3"
+- Be honest about confidence - lower it for tricky problems
+"""
 
     resp = client.responses.create(
         model="gpt-4o-mini",
@@ -270,7 +298,9 @@ Rules:
     )
     return json.loads(resp.output_text) 
 
-# ── STEP PARSING ─────────────────────────────────────────────
+
+
+# Takes each step returned by the LLM to create a list for wolfram to be able to use later. 
 def parse_steps(steps_raw: str) -> list:
     if not steps_raw:
         return []
@@ -308,14 +338,21 @@ def parse_steps(steps_raw: str) -> list:
 
     return steps
 
-# ── WOLFRAM ───────────────────────────────────────────────────
+# Takes in woldfram question to generate the answer 
 def wolfram_query(query: str):
     if not query or not WOLFRAM_APP_ID:
         return None
     try:
-        encoded = urllib.parse.quote(query)
+        # convert to Wolfram syntax before sending
+        clean_query = to_wolfram_syntax(query)
+        
+        encoded = urllib.parse.quote(clean_query)
         url = (f"http://api.wolframalpha.com/v2/query"
-               f"?appid={WOLFRAM_APP_ID}&input={encoded}&output=JSON&format=plaintext")
+               f"?appid={WOLFRAM_APP_ID}"
+               f"&input={encoded}"
+               f"&output=JSON"
+               f"&format=plaintext"
+               f"&podstate=DecimalApproximation") 
         with urllib.request.urlopen(url, timeout=10) as res:
             data = json.loads(res.read().decode())
 
@@ -337,6 +374,10 @@ def wolfram_query(query: str):
             if texts:
                 return texts[0]
 
+        return None
+
+    except urllib.error.HTTPError as e:
+        print(f"Wolfram HTTP error: {e.code} — query: {clean_query[:80]}")
         return None
     except Exception as e:
         print(f"Wolfram error: {e}")
@@ -366,9 +407,7 @@ def verify_steps_with_wolfram(steps: list, problem_context: str = "") -> list:
         if not calc or step.get("number") == "final":
             continue
 
-        # ── 1. CHECK AGAINST CONTEXT ──────────────────────────────
-        # only match standalone assignments like "n = 18" not "0.10n" or "d = 30 - n"
-        # requires: space/start before variable, pure number after =, nothing after
+        # ── 1. CONTEXT CHECK (existing) ───────────────────────
         used_pairs = re.findall(
             r'(?<![0-9a-z\.])([a-z])\s*=\s*(-?\d+\.?\d*)\s*(?![\+\-\*\/a-z])',
             calc.lower()
@@ -391,11 +430,13 @@ def verify_steps_with_wolfram(steps: list, problem_context: str = "") -> list:
                     break
 
         if not contradiction_found:
-            # ── 2. BUILD PROBLEM-AWARE QUERY ──────────────────────
-            if problem_context:
-                query = f"given {problem_context}, is it correct that {calc}?"
-            else:
-                query = f"simplify {calc}"
+
+            if not should_verify_step(calc):
+                step["verdict"] = "unverified"
+                previous_calc = calc
+                continue
+       
+            query = to_wolfram_syntax(calc)
 
             wolfram_result = wolfram_query(query) or wolfram_query(f"simplify {calc}")
             step["wolfram_result"] = wolfram_result
@@ -412,19 +453,27 @@ def verify_steps_with_wolfram(steps: list, problem_context: str = "") -> list:
                         f'This step may contain an error — check the calculation carefully.'
                     )
 
-        # ── 3. UPDATE CONTEXT ─────────────────────────────────────
-        # only store variable if entire calculation is JUST "x = 3" — nothing else
+
+      
         if step.get("verdict") != "wrong":
             simple_assignment = re.match(
                 r'^([a-z])\s*=\s*(-?\d+\.?\d*)\s*$',
                 calc.lower().strip()
             )
             if simple_assignment:
-                var  = simple_assignment.group(1)
-                val  = float(simple_assignment.group(2))
-                context[var] = val
+                context[simple_assignment.group(1)] = float(simple_assignment.group(2))
 
     return steps
+
+def should_verify_step(calc: str) -> bool:
+    calc = calc.strip()
+    return not any([
+        '...' in calc,
+        calc.count('*') > 5,
+        re.match(r'^\d+/\d+$', calc),
+        any(re.search(rf'\b{w}\b', calc.lower()) for w in ['result','value','answer','previous'])
+    ])
+
 
 def compare_calc_to_wolfram(ai_calc: str, wolfram_result: str) -> str:
     def normalize(s):
@@ -433,9 +482,31 @@ def compare_calc_to_wolfram(ai_calc: str, wolfram_result: str) -> str:
     ai_norm = normalize(ai_calc)
     wf_norm = normalize(wolfram_result)
 
+    # 1. normalized string match
     if wf_norm in ai_norm or ai_norm in wf_norm:
         return "correct"
 
+    # 2. try to evaluate the AI calculation numerically
+    # and compare to Wolfram's numeric result
+    try:
+        # prepare AI calc for eval
+        eval_expr = ai_calc.lower().strip()
+        eval_expr = re.sub(r'(\d)\s*\*\s*(\d)', r'\1*\2', eval_expr)
+        ai_val = eval(eval_expr)
+
+        # extract numeric value from Wolfram result
+        wf_numbers = re.findall(r'-?\d+\.?\d*', wolfram_result)
+        if wf_numbers:
+            wf_val = float(wf_numbers[0])
+            # compare numerically with tolerance
+            if abs(ai_val - wf_val) < 1e-3:
+                return "correct"
+            else:
+                return "wrong"
+    except Exception:
+        pass
+
+    # 3. number set overlap (existing logic)
     ai_nums = set(re.findall(r'-?\d+\.?\d*', ai_calc))
     wf_nums = set(re.findall(r'-?\d+\.?\d*', wolfram_result))
 
@@ -447,6 +518,36 @@ def compare_calc_to_wolfram(ai_calc: str, wolfram_result: str) -> str:
             return "wrong"
 
     return "unverified"
+
+def to_wolfram_syntax(expr: str) -> str:
+    """
+    Converts plain text math expressions to Wolfram Alpha syntax.
+    Makes queries more reliable and reduces 500 errors.
+    """
+    expr = expr.strip()
+
+    # implicit multiplication: "2x" → "2*x", "3y" → "3*y"
+    expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
+
+    # implicit multiplication with parentheses: "2(x+1)" → "2*(x+1)"
+    expr = re.sub(r'(\d)\(', r'\1*(', expr)
+
+    # exponents: "x^2" stays as "x^2" — Wolfram accepts this
+    # but "x²" needs converting
+    expr = expr.replace('²', '^2').replace('³', '^3')
+
+    # fractions: "1/2" stays as "1/2" — fine for Wolfram
+    
+    # absolute value: "|2x - 5|" → "Abs[2x - 5]"
+    expr = re.sub(r'\|(.+?)\|', r'Abs[\1]', expr)
+
+    # arrow notation GPT sometimes uses: "→" remove it
+    expr = re.sub(r'→.*$', '', expr).strip()
+
+    # remove trailing punctuation
+    expr = expr.rstrip('.,;:')
+
+    return expr
 
 # ── ANSWER CHECK ──────────────────────────────────────────────
 def check_answer(user_answer: str, correct_answer) -> bool:
@@ -491,3 +592,5 @@ def check_answer(user_answer: str, correct_answer) -> bool:
         return sum(1 for t in tokens if t in u) >= len(tokens) * 0.8
 
     return False
+
+

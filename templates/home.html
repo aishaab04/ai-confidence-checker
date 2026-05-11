@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CAPTURED — AI Confidence Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#0a0a0f;--ink2:#1a1a2e;--ink3:#2d2d44;--slate:#5a5a7a;
+      --muted:#8888aa;--border:#e4e4f0;--surface:#f7f7fc;--white:#ffffff;
+      --amber:#f59e0b;--amberl:#fef3c7;--amberd:#92400e;
+      --red:#ef4444;--redl:#fee2e2;--redd:#991b1b;
+      --green:#10b981;--greenl:#d1fae5;--greend:#065f46;
+      --purple:#7c3aed;--teal:#0891b2;
+      --font:'Syne',sans-serif;--mono:'JetBrains Mono',monospace;
+      --serif:'Instrument Serif',serif;--radius:14px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    body{font-family:var(--font);background:var(--ink);color:var(--white);min-height:100vh}
+
+    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 2rem;position:relative;overflow:hidden;text-align:center}
+    .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(245,158,11,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(245,158,11,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+    .hero::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(245,158,11,.12) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+    .hero-inner{position:relative;z-index:1;max-width:860px}
+    .logo-mark{width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,var(--amber),#f97316);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:24px;font-weight:700;color:white;margin:0 auto 2rem;box-shadow:0 0 40px rgba(245,158,11,.3)}
+    .hero-tagline{display:inline-block;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:var(--amber);font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1.4rem;border-radius:999px;margin-bottom:1.5rem}
+    .hero-title{font-size:clamp(3rem,8vw,5.5rem);font-weight:800;letter-spacing:.08em;line-height:1;margin-bottom:.75rem}
+    .hero-title span{color:var(--amber)}
+    .hero-subtitle{font-family:var(--serif);font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--muted);font-style:italic;margin-bottom:1.5rem}
+    .hero-desc{font-size:1.05rem;color:var(--muted);line-height:1.75;max-width:620px;margin:0 auto 2.5rem}
+    .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:10px;background:var(--amber);color:var(--ink);font-family:var(--font);font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all .2s;letter-spacing:.02em}
+    .btn-primary:hover{background:#d97706;transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,158,11,.3)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:10px;background:transparent;color:var(--muted);font-family:var(--font);font-size:15px;font-weight:600;text-decoration:none;border:1px solid var(--ink3);cursor:pointer;transition:all .2s}
+    .btn-ghost:hover{border-color:var(--muted);color:var(--white)}
+    .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.8rem;letter-spacing:.08em;display:flex;flex-direction:column;align-items:center;gap:6px;animation:bounce 2s infinite}
+    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+    .section{background:var(--surface);color:var(--ink);padding:5rem 2rem}
+    .section-inner{max-width:1100px;margin:0 auto}
+    .section-label{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+    .section-title{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:800;color:var(--ink);margin-bottom:1rem;line-height:1.15}
+    .section-title span{color:var(--amber)}
+    .section-desc{font-size:1rem;color:var(--slate);line-height:1.75;max-width:640px;margin-bottom:2.5rem}
+
+    .purpose-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:2rem}
+    .purpose-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:box-shadow .2s}
+    .purpose-card:hover{box-shadow:0 8px 32px rgba(10,10,30,.08)}
+    .purpose-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1rem}
+    .purpose-title{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.5rem}
+    .purpose-desc{font-size:.88rem;color:var(--slate);line-height:1.65}
+
+    .how-section{background:var(--ink);padding:5rem 2rem}
+    .how-inner{max-width:1100px;margin:0 auto}
+    .steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:2.5rem}
+    .step-card{background:var(--ink2);border:1px solid var(--ink3);border-radius:var(--radius);padding:1.75rem;transition:border-color .2s}
+    .step-card:hover{border-color:var(--amber)}
+    .step-number{font-family:var(--mono);font-size:.7rem;font-weight:700;color:var(--amber);letter-spacing:.1em;margin-bottom:1rem;background:rgba(245,158,11,.1);display:inline-block;padding:3px 10px;border-radius:4px}
+    .step-title{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+    .step-desc{font-size:.88rem;color:var(--muted);line-height:1.65}
+    .step-btn{display:inline-flex;align-items:center;gap:6px;margin-top:.75rem;padding:5px 12px;border-radius:6px;font-size:.8rem;font-weight:700;font-family:var(--font)}
+    .btn-quick{background:rgba(245,158,11,.15);color:var(--amber)}
+    .btn-gen{background:rgba(255,255,255,.08);color:var(--white)}
+    .btn-check{background:rgba(16,185,129,.12);color:#34d399}
+
+    .danger-section{background:var(--surface);padding:5rem 2rem}
+    .danger-inner{max-width:1100px;margin:0 auto}
+    .danger-box{background:var(--redl);border:1.5px solid #fca5a5;border-radius:var(--radius);padding:2rem 2.5rem;display:flex;gap:2rem;align-items:flex-start;margin-top:2rem}
+    .danger-icon{width:52px;height:52px;border-radius:50%;background:var(--red);color:white;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+    .danger-title{font-size:1.2rem;font-weight:700;color:var(--redd);margin-bottom:.5rem}
+    .danger-desc{font-size:.95rem;color:#7f1d1d;line-height:1.7}
+
+    .matrix-2x2{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:480px;margin-top:2rem}
+    .m-cell{border-radius:12px;padding:1.25rem}
+
+    .topics-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:1.5rem}
+    .topic-pill{font-size:.8rem;font-weight:600;padding:6px 16px;border-radius:999px;border:1.5px solid var(--border);background:var(--white);color:var(--slate);text-transform:capitalize}
+    .topic-pill.highlight{background:var(--amberl);color:var(--amberd);border-color:var(--amber)}
+
+    .footer{background:var(--ink2);border-top:1px solid var(--ink3);padding:2rem;text-align:center}
+    .footer-text{font-size:.85rem;color:var(--muted);line-height:1.8}
+    .footer-text a{color:var(--amber);text-decoration:none}
+
+    @media(max-width:600px){.danger-box{flex-direction:column}.cta-row{flex-direction:column;align-items:center}}
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="logo-mark">?!</div>
+    <div class="hero-tagline">Rutgers University &middot; MSCS &middot; CS526</div>
+    <h1 class="hero-title">CAP<span>TURED</span></h1>
+    <p class="hero-subtitle">AI Confidence Checker</p>
+    <p class="hero-desc">An interactive classroom tool that exposes AI hallucinations in mathematics by measuring confidence against correctness making the invisible visible.</p>
+    <div class="cta-row">
+      <a href="/app" class="btn-primary"><span>&#9889;</span> Launch App</a>
+      <a href="/teacher" class="btn-ghost"><span>&#128202;</span> Teacher Dashboard</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Scroll to learn more</span><span>&#8595;</span></div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">About the Project</div>
+    <h2 class="section-title">Why <span>CAPTURED</span>?</h2>
+    <p class="section-desc">With the rise of large language models, students increasingly rely on AI tools to answer mathematical questions without critically evaluating the responses. CAPTURED was built to change that.</p>
+
+    <div class="purpose-grid">
+      <div class="purpose-card">
+        <div class="purpose-icon" style="background:#fef3c7">&#127919;</div>
+        <div class="purpose-title">Expose Overconfidence</div>
+        <div class="purpose-desc">AI models report high confidence scores even when their answers are wrong. CAPTURED makes this disconnect immediately visible to every student.</div>
+      </div>
+      <div class="purpose-card">
+        <div class="purpose-icon" style="background:#d1fae5">&#128269;</div>
+        <div class="purpose-title">Step-by-Step Verification</div>
+        <div class="purpose-desc">Every reasoning step the AI produces is independently verified using Wolfram Alpha catching exactly where the logic breaks down.</div>
+      </div>
+      <div class="purpose-card">
+        <div class="purpose-icon" style="background:#ede9fe">&#128218;</div>
+        <div class="purpose-title">Build Critical Thinking</div>
+        <div class="purpose-desc">The three-button flow forces students to engage with AI output rather than passively accept it. Building the habit of verification.</div>
+      </div>
+      <div class="purpose-card">
+        <div class="purpose-icon" style="background:#cffafe">&#128202;</div>
+        <div class="purpose-title">Teacher Analytics</div>
+        <div class="purpose-desc">A persistent dashboard tracks error rates, hallucination counts, and confidence patterns across sessions. Giving educators real data.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem">
+      <div class="section-label">Question Bank</div>
+      <h3 style="font-size:1.3rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">45 problems across 9 topics</h3>
+      <p style="font-size:.9rem;color:var(--slate);margin-bottom:1rem">Designed to expose known AI failure modes &mdash; especially the <strong>LLM Traps</strong> category.</p>
+      <div class="topics-grid">
+        <span class="topic-pill highlight">LLM Traps &#9733;</span>
+        <span class="topic-pill">Systems of Equations</span>
+        <span class="topic-pill">Word Problems</span>
+        <span class="topic-pill">Quadratics</span>
+        <span class="topic-pill">Probability</span>
+        <span class="topic-pill">Exponents</span>
+        <span class="topic-pill">Geometry</span>
+        <span class="topic-pill">Algebra</span>
+        <span class="topic-pill">Statistics</span>
+        <span class="topic-pill">Pre-Calculus</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how-section">
+  <div class="how-inner">
+    <div class="section-label" style="color:var(--muted)">How to Use</div>
+    <h2 class="section-title" style="color:var(--white)">Three steps. One insight.</h2>
+    <p style="font-size:1rem;color:var(--muted);line-height:1.75;max-width:580px;margin-bottom:2rem">The interaction reveals information progressively &mdash; you commit to seeing an answer before you can verify it.</p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">STEP 01</div>
+        <div class="step-title">Pick a Question</div>
+        <div class="step-desc">Select from 45 curated math problems. Filter by topic using the pill buttons. The question prompt is shown before any AI is called.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">STEP 02</div>
+        <div class="step-title">Generate an Answer</div>
+        <div class="step-desc">Choose how the AI responds &mdash; with or without reasoning shown.</div>
+        <div style="display:flex;gap:8px;margin-top:.75rem;flex-wrap:wrap">
+          <span class="step-btn btn-quick">&#9889; Quick Answer</span>
+          <span class="step-btn btn-gen">&#9711; With Steps</span>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">STEP 03</div>
+        <div class="step-title">Check the Answer</div>
+        <div class="step-desc">Wolfram Alpha verifies every step. The answer is compared to ground truth. The hallucination alert fires if confidence was high but wrong.</div>
+        <span class="step-btn btn-check" style="display:inline-flex;margin-top:.75rem">&#10003; Check Answer</span>
+      </div>
+      <div class="step-card">
+        <div class="step-number">STEP 04</div>
+        <div class="step-title">Read the Results</div>
+        <div class="step-desc">Steps are colored green or red. The confidence bar shows what the AI claimed. Look for the pattern &mdash; confidence does not equal correctness.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="danger-section">
+  <div class="danger-inner">
+    <div class="section-label">The Core Finding</div>
+    <h2 class="section-title">The Hallucination <span>Danger Zone</span></h2>
+    <p class="section-desc">When an AI model expresses high confidence but answers incorrectly, that is the hallucination danger zone. CAPTURED makes this visible every time it happens.</p>
+    <div class="danger-box">
+      <div class="danger-icon">!</div>
+      <div>
+        <div class="danger-title">High Confidence + Wrong Answer</div>
+        <div class="danger-desc">GPT-4o-mini consistently reports confidence between 85&ndash;95% regardless of correctness. On LLM Trap questions &mdash; Monty Hall, harmonic mean speed, Bayes theorem &mdash; the AI answers with near-certainty and gets it wrong. CAPTURED catches this every time and shows exactly where the reasoning failed.</div>
+      </div>
+    </div>
+    <div class="matrix-2x2">
+      <div class="m-cell" style="background:#7f1d1d;border:1px solid #ef4444">
+        <div style="font-size:.65rem;font-weight:700;color:#fca5a5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem">Danger Zone</div>
+        <div style="font-size:1.6rem;font-weight:700;color:#fca5a5;font-family:var(--mono)">Wrong</div>
+        <div style="font-size:.75rem;color:#fca5a5;margin-top:.2rem">High confidence</div>
+      </div>
+      <div class="m-cell" style="background:#064e3b;border:1px solid #10b981">
+        <div style="font-size:.65rem;font-weight:700;color:#6ee7b7;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem">Expected</div>
+        <div style="font-size:1.6rem;font-weight:700;color:#6ee7b7;font-family:var(--mono)">Correct</div>
+        <div style="font-size:.75rem;color:#6ee7b7;margin-top:.2rem">High confidence</div>
+      </div>
+      <div class="m-cell" style="background:#1e3a5f;border:1px solid #3b82f6">
+        <div style="font-size:.65rem;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem">Uncertain</div>
+        <div style="font-size:1.6rem;font-weight:700;color:#93c5fd;font-family:var(--mono)">Wrong</div>
+        <div style="font-size:.75rem;color:#93c5fd;margin-top:.2rem">Low confidence</div>
+      </div>
+      <div class="m-cell" style="background:#1e293b;border:1px solid #475569">
+        <div style="font-size:.65rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem">Lucky</div>
+        <div style="font-size:1.6rem;font-weight:700;color:#94a3b8;font-family:var(--mono)">Correct</div>
+        <div style="font-size:.75rem;color:#94a3b8;margin-top:.2rem">Low confidence</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--ink);padding:4rem 2rem;text-align:center">
+  <div class="logo-mark" style="margin-bottom:1.5rem">?!</div>
+  <h2 style="font-size:2rem;font-weight:800;color:var(--white);margin-bottom:.75rem">Ready to start?</h2>
+  <p style="font-size:1rem;color:var(--muted);margin-bottom:2rem">Pick a question and see if the AI gets it right.</p>
+  <div class="cta-row">
+    <a href="/app" class="btn-primary">Launch the App &rarr;</a>
+    <a href="/teacher" class="btn-ghost">Teacher Dashboard</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <p class="footer-text">
+    CAPTURED &middot; Aisha Abouganba &middot; Rutgers University MSCS &middot; CS526<br>
+    <a href="https://github.com/aishaab04/ai-confidence-checker" target="_blank">github.com/aishaab04/ai-confidence-checker</a>
+    &middot; Mentor: Dr. James Abello
+  </p>
+</footer>
+
+</body>
+</html>

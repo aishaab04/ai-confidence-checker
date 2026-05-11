@@ -172,16 +172,8 @@
       <div class="metric-value red" id="mWrong">—</div>
       <div class="metric-sub" id="mErrorRate">—</div>
     </div>
-    <div class="metric-card">
-      <div class="metric-label">Hallucination zone</div>
-      <div class="metric-value amber" id="mHalluc">—</div>
-      <div class="metric-sub" id="mHalluRate">high conf + wrong</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Avg AI confidence</div>
-      <div class="metric-value" id="mConf">—</div>
-      <div class="metric-sub">self-reported</div>
-    </div>
+  
+   
   </div>
 
   <div class="two-col">
@@ -269,9 +261,7 @@ async function loadData() {
     document.getElementById('mTotal').textContent   = stats.total || 0;
     document.getElementById('mWrong').textContent   = stats.wrong || 0;
     document.getElementById('mErrorRate').textContent = `${stats.error_rate || 0}% error rate`;
-    document.getElementById('mHalluc').textContent  = stats.hallucinations || 0;
-    document.getElementById('mHalluRate').textContent = `${stats.hallucination_rate || 0}% of all checks`;
-    document.getElementById('mConf').textContent    = stats.avg_confidence ? `${stats.avg_confidence}%` : '—';
+
 
     // matrix
     const hi = results.filter(r => r.confidence >= 75);
@@ -310,7 +300,7 @@ async function loadData() {
           return `<div class="topic-row">
             <span class="topic-label">${topic.replace(/_/g,' ')}</span>
             <div class="topic-track"><div class="topic-fill-conf" style="width:${avg}%"></div></div>
-            <span class="topic-pct">${avg}%</span>
+            
             <span class="topic-count">${d.total} asks</span>
           </div>`;
         }).join('');

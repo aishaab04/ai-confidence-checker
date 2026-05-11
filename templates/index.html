@@ -8,6 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/style.css" />
 </head>
+
+</body>
 <body>
 
   <!-- HEADER -->
@@ -24,8 +26,20 @@
       </div>
       <div class="header-meta">
         <div class="topic-indicator" id="topicIndicator">No question selected</div>
-        
       </div>
+      <div style="display:flex;align-items:center;gap:12px;justify-content:flex-end">
+  <div class="topic-indicator" id="topicIndicator">No question selected</div>
+  <a href="/teacher" style="font-size:12px;font-weight:700;color:#f59e0b;text-decoration:none;padding:5px 14px;border-radius:6px;border:1px solid #f59e0b44;letter-spacing:.04em;transition:all .15s" 
+     onmouseover="this.style.background='#f59e0b22'" 
+     onmouseout="this.style.background='transparent'">
+    Teacher →
+  </a>
+   <a href="/" style="font-size:12px;font-weight:700;color:#f59e0b;text-decoration:none;padding:5px 14px;border-radius:6px;border:1px solid #f59e0b44;letter-spacing:.04em;transition:all .15s" 
+     onmouseover="this.style.background='#f59e0b22'" 
+     onmouseout="this.style.background='transparent'">
+    Home →
+  </a>
+</div>
     </div>
   </header>
 
@@ -148,7 +162,11 @@
               <div class="stat-label">Avg confidence</div>
             </div>
           </div>
+          
         </section>
+       
+    
+</section>
 
         <!-- Walkthrough -->
         <section class="side-card walkthrough-card">

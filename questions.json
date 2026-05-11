@@ -107,7 +107,7 @@
     "id": "wp008",
     "label": "Word problem — investment",
     "prompt": "Sarah invests $8000 total in two accounts. One earns 5% interest and the other earns 3% interest. After one year she earns $340 total interest. How much did she invest in each account? Use x for the 5% account and y for the 3% account.",
-    "answer": "x=7000, y=1000",
+    "answer": "x=3000, y=5000",
     "topic": "word_problems",
     "wolfram_query": "solve {x + y = 8000, 0.05x + 0.03y = 340}"
   },

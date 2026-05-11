@@ -352,5 +352,587 @@
       "error": "Wolfram evaluated this as: \"5 y - 10 = 0\". This step may contain an error \u2014 check the calculation carefully."
     },
     "timestamp": "2026-05-05T00:48:54.431962"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 7,
+      "description": "Substitute y back to find x",
+      "calculation": "x = 2 + 1",
+      "verdict": "wrong",
+      "wolfram_result": "x - 3 = 0",
+      "error": "Wolfram evaluated this as: \"x - 3 = 0\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-05T14:01:54.166085"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 2,
+      "description": "Substitute x in the first equation",
+      "calculation": "2(y + 1) + 3y = 12",
+      "verdict": "wrong",
+      "wolfram_result": "5 y - 10 = 0",
+      "error": "Wolfram evaluated this as: \"5 y - 10 = 0\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-05T14:07:38.598958"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 5,
+      "description": "Isolate y",
+      "calculation": "5y = 10",
+      "verdict": "wrong",
+      "wolfram_result": "y = 2",
+      "error": "Wolfram evaluated this as: \"y = 2\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-05T14:10:32.937138"
+  },
+  {
+    "question_id": "llm003",
+    "topic": "llm_traps",
+    "prompt": "In a room of 23 people, what is the probability that at least two share the same birthday? Give a percentage rounded to 2 decimal places. Return only the number without the % sign.",
+    "ai_answer": "99.39",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:11:48.587300"
+  },
+  {
+    "question_id": "llm003",
+    "topic": "llm_traps",
+    "prompt": "In a room of 23 people, what is the probability that at least two share the same birthday? Give a percentage rounded to 2 decimal places. Return only the number without the % sign.",
+    "ai_answer": "50.73",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:16:07.835316"
+  },
+  {
+    "question_id": "llm003",
+    "topic": "llm_traps",
+    "prompt": "In a room of 23 people, what is the probability that at least two share the same birthday? Give a percentage rounded to 2 decimal places. Return only the number without the % sign.",
+    "ai_answer": "50.73",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 1,
+      "description": "Calculate the probability that the first person has a unique birthday",
+      "calculation": "365/365",
+      "verdict": "wrong",
+      "wolfram_result": "1",
+      "error": "Wolfram evaluated this as: \"1\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-05T14:18:43.751344"
+  },
+  {
+    "question_id": "llm003",
+    "topic": "llm_traps",
+    "prompt": "In a room of 23 people, what is the probability that at least two share the same birthday? Give a percentage rounded to 2 decimal places. Return only the number without the % sign.",
+    "ai_answer": "99.14",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": {
+      "number": 5,
+      "description": "Calculate the final probability that no two people share a birthday",
+      "calculation": "1 - ((365/365) * (364/365) * (363/365) * ... * (343/365))",
+      "verdict": "wrong",
+      "wolfram_result": "38093904702297390785243708291056390518886454060947061/75091883268515350125426207425223147563269805908203125",
+      "error": "Wolfram evaluated this as: \"38093904702297390785243708291056390518886454060947061/75091883268515350125426207425223147563269805908203125\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-05T14:22:12.635966"
+  },
+  {
+    "question_id": "llm003",
+    "topic": "llm_traps",
+    "prompt": "In a room of 23 people, what is the probability that at least two share the same birthday? Give a percentage rounded to 2 decimal places. Return only the number without the % sign.",
+    "ai_answer": "50.73",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 5,
+      "description": "Continue this until the 23rd person",
+      "calculation": "(365*364*363*362*361*360*359*358*357*356*355*354*353*352*351*350*349*348*347*346*345)/(365^23)",
+      "verdict": "wrong",
+      "wolfram_result": "313563449778103255645997178911847896843712724992/75091883268515350125426207425223147563269805908203125",
+      "error": "Wolfram evaluated this as: \"313563449778103255645997178911847896843712724992/75091883268515350125426207425223147563269805908203125\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-05T14:24:30.769453"
+  },
+  {
+    "question_id": "llm003",
+    "topic": "llm_traps",
+    "prompt": "In a room of 23 people, what is the probability that at least two share the same birthday? Give a percentage rounded to 2 decimal places. Return only the number without the % sign.",
+    "ai_answer": "x=3, y=2.",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": {
+      "number": 5,
+      "description": "Subtract 2 from both sides",
+      "calculation": "5y = 10",
+      "verdict": "wrong",
+      "wolfram_result": "y = 2",
+      "error": "Wolfram evaluated this as: \"y = 2\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-05T14:29:24.026641"
+  },
+  {
+    "question_id": "llm003",
+    "topic": "llm_traps",
+    "prompt": "In a room of 23 people, what is the probability that at least two share the same birthday? Give a percentage rounded to 2 decimal places. Return only the number without the % sign.",
+    "ai_answer": "50.73",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:29:33.583423"
+  },
+  {
+    "question_id": "llm003",
+    "topic": "llm_traps",
+    "prompt": "In a room of 23 people, what is the probability that at least two share the same birthday? Give a percentage rounded to 2 decimal places. Return only the number without the % sign.",
+    "ai_answer": "99.57",
+    "correct": false,
+    "confidence": 95,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:29:44.377420"
+  },
+  {
+    "question_id": "llm004",
+    "topic": "llm_traps",
+    "prompt": "In the Monty Hall problem you pick door 1. The host opens door 3 revealing a goat. What is your probability of winning if you switch? Express as a fraction.",
+    "ai_answer": "2/3",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:30:31.006643"
+  },
+  {
+    "question_id": "llm004",
+    "topic": "llm_traps",
+    "prompt": "In the Monty Hall problem you pick door 1. The host opens door 3 revealing a goat. What is your probability of winning if you switch? Express as a fraction.",
+    "ai_answer": "2/3",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:33:52.552030"
+  },
+  {
+    "question_id": "llm004",
+    "topic": "llm_traps",
+    "prompt": "In the Monty Hall problem you pick door 1. The host opens door 3 revealing a goat. What is your probability of winning if you switch? Express as a fraction.",
+    "ai_answer": "2/3",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:34:30.504121"
+  },
+  {
+    "question_id": "llm002",
+    "topic": "llm_traps",
+    "prompt": "Evaluate: 6 / 2(1 + 2). Return only the number.",
+    "ai_answer": "9",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 2,
+      "description": "Rewrite the expression using the result from STEP 1",
+      "calculation": "6 / 2(3)",
+      "verdict": "wrong",
+      "wolfram_result": "9",
+      "error": "Wolfram evaluated this as: \"9\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-05T14:40:52.693543"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:51:22.740447"
+  },
+  {
+    "question_id": "wp006",
+    "topic": "word_problems",
+    "prompt": "A piggy bank has 30 coins, all nickels and dimes, worth $2.10 total. How many of each coin are there? Use n for nickels and d for dimes.",
+    "ai_answer": "n=24, d=6",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:51:34.282472"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:55:50.955267"
+  },
+  {
+    "question_id": "sys003",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system: 2x + 4y = 8 and x + 2y = 4",
+    "ai_answer": "x=0, y=2",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:55:58.511977"
+  },
+  {
+    "question_id": "wp006",
+    "topic": "word_problems",
+    "prompt": "A piggy bank has 30 coins, all nickels and dimes, worth $2.10 total. How many of each coin are there? Use n for nickels and d for dimes.",
+    "ai_answer": "n=24, d=6",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T14:56:04.530104"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-05T15:16:15.687001"
+  },
+  {
+    "question_id": "wp006",
+    "topic": "word_problems",
+    "prompt": "A piggy bank has 30 coins, all nickels and dimes, worth $2.10 total. How many of each coin are there? Use n for nickels and d for dimes.",
+    "ai_answer": "n=18, d=12",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 3,
+      "description": "Set up the second equation based on the total value of the coins",
+      "calculation": "0.05n + 0.10d = 2.10",
+      "verdict": "wrong",
+      "wolfram_result": "n = 42 - 2 d",
+      "error": "Wolfram evaluated this as: \"n = 42 - 2 d\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-10T15:39:58.067799"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 5,
+      "description": "Isolate y",
+      "calculation": "5y = 10",
+      "verdict": "wrong",
+      "wolfram_result": "y = 2",
+      "error": "Wolfram evaluated this as: \"y = 2\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-10T23:59:21.393744"
+  },
+  {
+    "question_id": "wp005",
+    "topic": "word_problems",
+    "prompt": "A store raises prices by 20% then offers a 20% discount. What is the net percent change from the original price?",
+    "ai_answer": "-4",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-11T00:00:46.587546"
+  },
+  {
+    "question_id": "wp008",
+    "topic": "word_problems",
+    "prompt": "Sarah invests $8000 total in two accounts. One earns 5% interest and the other earns 3% interest. After one year she earns $340 total interest. How much did she invest in each account? Use x for the 5% account and y for the 3% account.",
+    "ai_answer": "x=5000, y=3000",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": {
+      "number": 2,
+      "description": "Write the equation for total interest earned",
+      "calculation": "0.05x + 0.03y = 340",
+      "verdict": "wrong",
+      "wolfram_result": "y\u224811333.3 - 1.66667 x",
+      "error": "Wolfram evaluated this as: \"y\u224811333.3 - 1.66667 x\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-11T00:04:51.356310"
+  },
+  {
+    "question_id": "wp008",
+    "topic": "word_problems",
+    "prompt": "Sarah invests $8000 total in two accounts. One earns 5% interest and the other earns 3% interest. After one year she earns $340 total interest. How much did she invest in each account? Use x for the 5% account and y for the 3% account.",
+    "ai_answer": "x=5000, y=3000",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": {
+      "number": 2,
+      "description": "Set up the second equation for total interest.",
+      "calculation": "0.05x + 0.03y = 340",
+      "verdict": "wrong",
+      "wolfram_result": "y\u224811333.3 - 1.66667 x",
+      "error": "Wolfram evaluated this as: \"y\u224811333.3 - 1.66667 x\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-11T00:13:19.793249"
+  },
+  {
+    "question_id": "llm002",
+    "topic": "llm_traps",
+    "prompt": "Evaluate: 6 / 2(1 + 2). Return only the number.",
+    "ai_answer": "9",
+    "correct": true,
+    "confidence": 95,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-11T00:14:00.914387"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 5,
+      "description": "Isolate y",
+      "calculation": "5y = 10",
+      "verdict": "wrong",
+      "wolfram_result": "y = 2",
+      "error": "Wolfram evaluated this as: \"y = 2\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-11T02:04:38.455280"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 5,
+      "description": "Isolate y",
+      "calculation": "5y = 10",
+      "verdict": "wrong",
+      "wolfram_result": "y = 2",
+      "error": "Wolfram evaluated this as: \"y = 2\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-11T02:19:30.687893"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 5,
+      "description": "Isolate y",
+      "calculation": "5y = 10",
+      "verdict": "wrong",
+      "wolfram_result": "y = 2",
+      "error": "Wolfram evaluated this as: \"y = 2\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-11T02:57:38.746531"
+  },
+  {
+    "question_id": "wp006",
+    "topic": "word_problems",
+    "prompt": "A piggy bank has 30 coins, all nickels and dimes, worth $2.10 total. How many of each coin are there? Use n for nickels and d for dimes.",
+    "ai_answer": "n=6, d=24",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-11T02:58:36.615195"
+  },
+  {
+    "question_id": "wp006",
+    "topic": "word_problems",
+    "prompt": "A piggy bank has 30 coins, all nickels and dimes, worth $2.10 total. How many of each coin are there? Use n for nickels and d for dimes.",
+    "ai_answer": "n=18, d=12",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": {
+      "number": 2,
+      "description": "Set up the second equation based on the total value in cents",
+      "calculation": "5n + 10d = 210",
+      "verdict": "wrong",
+      "wolfram_result": "n = 42 - 2 d",
+      "error": "Wolfram evaluated this as: \"n = 42 - 2 d\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-11T02:59:20.004954"
+  },
+  {
+    "question_id": "prob004",
+    "topic": "probability",
+    "prompt": "A disease affects 1% of the population. A test is 99% accurate for both positive and negative results. If you test positive, what is the probability you actually have the disease? Return as a percentage rounded to nearest whole number.",
+    "ai_answer": "1",
+    "correct": false,
+    "confidence": 80,
+    "flagged": true,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-11T03:00:32.683349"
+  },
+  {
+    "question_id": "prob004",
+    "topic": "probability",
+    "prompt": "A disease affects 1% of the population. A test is 99% accurate for both positive and negative results. If you test positive, what is the probability you actually have the disease? Return as a percentage rounded to nearest whole number.",
+    "ai_answer": "50",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "none",
+    "first_error": null,
+    "timestamp": "2026-05-11T03:02:25.438771"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "quick",
+    "first_error": null,
+    "timestamp": "2026-05-11T03:27:35.761635"
+  },
+  {
+    "question_id": "sys001",
+    "topic": "systems_of_equations",
+    "prompt": "Solve the system of equations: 2x + 3y = 12 and x - y = 1",
+    "ai_answer": "x=3, y=2",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "explain",
+    "first_error": {
+      "number": 5,
+      "description": "Isolate y",
+      "calculation": "5y = 10",
+      "verdict": "wrong",
+      "wolfram_result": "y = 2",
+      "error": "Wolfram evaluated this as: \"y = 2\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-11T03:28:08.722485"
+  },
+  {
+    "question_id": "wp006",
+    "topic": "word_problems",
+    "prompt": "A piggy bank has 30 coins, all nickels and dimes, worth $2.10 total. How many of each coin are there? Use n for nickels and d for dimes.",
+    "ai_answer": "n=6, d=24",
+    "correct": false,
+    "confidence": 90,
+    "flagged": true,
+    "method_used": "quick",
+    "first_error": null,
+    "timestamp": "2026-05-11T03:29:09.082802"
+  },
+  {
+    "question_id": "wp006",
+    "topic": "word_problems",
+    "prompt": "A piggy bank has 30 coins, all nickels and dimes, worth $2.10 total. How many of each coin are there? Use n for nickels and d for dimes.",
+    "ai_answer": "n=18, d=12",
+    "correct": true,
+    "confidence": 90,
+    "flagged": false,
+    "method_used": "explain",
+    "first_error": {
+      "number": 1,
+      "description": "Set up the equations based on the problem statement",
+      "calculation": "5n + 10d = 210",
+      "verdict": "wrong",
+      "wolfram_result": "n = 42 - 2 d",
+      "error": "Wolfram evaluated this as: \"n = 42 - 2 d\". This step may contain an error \u2014 check the calculation carefully."
+    },
+    "timestamp": "2026-05-11T03:29:43.518955"
   }
 ]
